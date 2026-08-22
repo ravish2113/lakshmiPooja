@@ -1,3 +1,5 @@
+# श्री श्री लक्ष्मी पूजा समिति मुस्तफापुर
+
 # Lakshmi Pooja Financial Ledger
 
 Spring Boot + React/Vite + PostgreSQL community donation and expenditure ledger.

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: lakshmi-pooja-ledger
+    name: lakshmi-pooja-ledger-mustafapur
 
   datasource:
     url: ${SPRING_DATASOURCE_URL}
