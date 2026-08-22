@@ -1,0 +1,4 @@
+
+.form-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+button:disabled,select:disabled{opacity:.55;cursor:not-allowed}
+.users-grid{display:grid;grid-template-columns:minmax(320px,.8fr) minmax(420px,1.2fr);gap:20px}.users-grid .table-card{padding:22px}.users-grid h2{margin-top:0}@media(max-width:1000px){.users-grid{grid-template-columns:1fr}}
