@@ -27,15 +27,15 @@ public class DataInitializer {
         @Value("${app.admin.display-name}") String displayName
     ) {
         return args -> {
-            if (!users.existsByUsername(username)) {
-                AppUser admin = new AppUser();
-                admin.setUsername(username);
-                admin.setPassword(encoder.encode(password));
-                admin.setDisplayName(displayName);
-                admin.setRole(Role.ADMIN);
-                admin.setActive(true);
-                users.save(admin);
-            }
+            // Keep the configured admin account synchronized with deployment settings.
+            // This lets ADMIN_PASSWORD be reset safely from Render without deleting data.
+            AppUser admin = users.findByUsername(username).orElseGet(AppUser::new);
+            admin.setUsername(username);
+            admin.setPassword(encoder.encode(password));
+            admin.setDisplayName(displayName);
+            admin.setRole(Role.ADMIN);
+            admin.setActive(true);
+            users.save(admin);
 
             // Seed archive years from 2024 through the current calendar year.
             // Missing years are inserted without disturbing existing data.
