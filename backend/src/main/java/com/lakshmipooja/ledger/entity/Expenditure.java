@@ -22,8 +22,11 @@ public class Expenditure {
     @Column(nullable = false, length = 80)
     private String category;
 
-    @Column(nullable = false, precision = 14, scale = 2)
-    private BigDecimal amount;
+    @Column(name = "total_cost", nullable = false, precision = 14, scale = 2)
+    private BigDecimal totalCost;
+
+    @Column(name = "paid_amount", nullable = false, precision = 14, scale = 2)
+    private BigDecimal paidAmount = BigDecimal.ZERO;
 
     @Column(name = "expense_date", nullable = false)
     private LocalDate expenseDate;
@@ -47,7 +50,9 @@ public class Expenditure {
     public PoojaYearLedger getYear() { return year; }
     public String getTitle() { return title; }
     public String getCategory() { return category; }
-    public BigDecimal getAmount() { return amount; }
+    public BigDecimal getTotalCost() { return totalCost; }
+    public BigDecimal getPaidAmount() { return paidAmount; }
+    public BigDecimal getLeftAmount() { return totalCost.subtract(paidAmount); }
     public LocalDate getExpenseDate() { return expenseDate; }
     public String getVendor() { return vendor; }
     public String getReceiptReference() { return receiptReference; }
@@ -56,7 +61,8 @@ public class Expenditure {
     public void setYear(PoojaYearLedger year) { this.year = year; }
     public void setTitle(String title) { this.title = title; }
     public void setCategory(String category) { this.category = category; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
+    public void setTotalCost(BigDecimal totalCost) { this.totalCost = totalCost; }
+    public void setPaidAmount(BigDecimal paidAmount) { this.paidAmount = paidAmount; }
     public void setExpenseDate(LocalDate expenseDate) { this.expenseDate = expenseDate; }
     public void setVendor(String vendor) { this.vendor = vendor; }
     public void setReceiptReference(String receiptReference) { this.receiptReference = receiptReference; }

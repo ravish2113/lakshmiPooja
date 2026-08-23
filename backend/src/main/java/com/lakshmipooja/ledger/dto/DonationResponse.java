@@ -7,9 +7,10 @@ public record DonationResponse(
     Long id,
     Integer year,
     String donorName,
-    String flatDetails,
+    String fatherMotherName,
     BigDecimal amount,
     LocalDate donationDate,
     String paymentMode,
+    String paymentStatus,
     String notes
 ) {}

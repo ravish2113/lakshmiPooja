@@ -2,6 +2,8 @@ package com.lakshmipooja.ledger.service;
 
 import com.lakshmipooja.ledger.dto.*;
 import com.lakshmipooja.ledger.entity.Donation;
+import com.lakshmipooja.ledger.entity.DonationStatus;
+import com.lakshmipooja.ledger.entity.PaymentMode;
 import com.lakshmipooja.ledger.entity.PoojaYearLedger;
 import com.lakshmipooja.ledger.exception.BusinessException;
 import com.lakshmipooja.ledger.exception.ResourceNotFoundException;
@@ -33,11 +35,9 @@ public class DonationService {
     public DonationResponse create(Integer year, DonationRequest request) {
         PoojaYearLedger ledger = yearService.getByYear(year);
         ensureOpen(ledger);
-
         Donation d = new Donation();
         apply(d, request);
         d.setYear(ledger);
-
         return toResponse(donations.save(d));
     }
 
@@ -60,11 +60,12 @@ public class DonationService {
     }
 
     private void apply(Donation d, DonationRequest r) {
-        d.setDonorName(r.donorName());
-        d.setFlatDetails(r.flatDetails());
+        d.setDonorName(r.donorName().trim());
+        d.setFatherMotherName(r.fatherMotherName());
         d.setAmount(r.amount());
         d.setDonationDate(r.donationDate());
-        d.setPaymentMode(r.paymentMode());
+        d.setPaymentStatus(r.paymentStatus());
+        d.setPaymentMode(r.paymentStatus() == DonationStatus.UNPAID ? PaymentMode.PENDING : r.paymentMode());
         d.setNotes(r.notes());
     }
 
@@ -76,9 +77,9 @@ public class DonationService {
 
     private DonationResponse toResponse(Donation d) {
         return new DonationResponse(
-            d.getId(), d.getYear().getYear(), d.getDonorName(),
-            d.getFlatDetails(), d.getAmount(), d.getDonationDate(),
-            d.getPaymentMode().name(), d.getNotes()
+            d.getId(), d.getYear().getYear(), d.getDonorName(), d.getFatherMotherName(),
+            d.getAmount(), d.getDonationDate(), d.getPaymentMode().name(),
+            d.getPaymentStatus().name(), d.getNotes()
         );
     }
 }

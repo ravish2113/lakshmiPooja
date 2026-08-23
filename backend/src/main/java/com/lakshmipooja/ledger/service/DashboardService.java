@@ -1,6 +1,7 @@
 package com.lakshmipooja.ledger.service;
 
 import com.lakshmipooja.ledger.dto.DashboardResponse;
+import com.lakshmipooja.ledger.entity.DonationStatus;
 import com.lakshmipooja.ledger.entity.PoojaYearLedger;
 import com.lakshmipooja.ledger.repository.DonationRepository;
 import com.lakshmipooja.ledger.repository.ExpenditureRepository;
@@ -14,11 +15,7 @@ public class DashboardService {
     private final DonationRepository donations;
     private final ExpenditureRepository expenditures;
 
-    public DashboardService(
-        YearService yearService,
-        DonationRepository donations,
-        ExpenditureRepository expenditures
-    ) {
+    public DashboardService(YearService yearService, DonationRepository donations, ExpenditureRepository expenditures) {
         this.yearService = yearService;
         this.donations = donations;
         this.expenditures = expenditures;
@@ -28,17 +25,27 @@ public class DashboardService {
         PoojaYearLedger ledger = yearService.getByYear(year);
 
         BigDecimal donationTotal = donations.sumAmountByYear(year);
-        BigDecimal expenditureTotal = expenditures.sumAmountByYear(year);
+        BigDecimal donationPaid = donations.sumAmountByYearAndStatus(year, DonationStatus.PAID);
+        BigDecimal donationUnpaid = donationTotal.subtract(donationPaid);
 
+        BigDecimal expenditureTotal = expenditures.sumTotalCostByYear(year);
+        BigDecimal expenditurePaid = expenditures.sumPaidAmountByYear(year);
+        BigDecimal expenditureUnpaid = expenditureTotal.subtract(expenditurePaid);
+
+        // Cash balance reflects only money actually received and actually paid.
         BigDecimal balance = ledger.getOpeningBalance()
-            .add(donationTotal)
-            .subtract(expenditureTotal);
+            .add(donationPaid)
+            .subtract(expenditurePaid);
 
         return new DashboardResponse(
             year,
             ledger.getOpeningBalance(),
             donationTotal,
+            donationPaid,
+            donationUnpaid,
             expenditureTotal,
+            expenditurePaid,
+            expenditureUnpaid,
             balance,
             donations.countByYearYear(year),
             expenditures.countByYearYear(year),

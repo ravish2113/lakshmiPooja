@@ -9,5 +9,6 @@ public record PublicDonationResponse(
     String donorName,
     BigDecimal amount,
     LocalDate donationDate,
-    String paymentMode
+    String paymentMode,
+    String paymentStatus
 ) {}

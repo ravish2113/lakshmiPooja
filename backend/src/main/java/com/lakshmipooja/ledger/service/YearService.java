@@ -2,6 +2,7 @@ package com.lakshmipooja.ledger.service;
 
 import com.lakshmipooja.ledger.dto.YearResponse;
 import com.lakshmipooja.ledger.entity.PoojaYearLedger;
+import com.lakshmipooja.ledger.entity.DonationStatus;
 import com.lakshmipooja.ledger.exception.BusinessException;
 import com.lakshmipooja.ledger.exception.ResourceNotFoundException;
 import com.lakshmipooja.ledger.repository.*;
@@ -56,12 +57,22 @@ public class YearService {
             throw new BusinessException("Year " + year + " is already closed.");
         }
 
-        BigDecimal donationTotal = donations.sumAmountByYear(year);
-        BigDecimal expenditureTotal = expenditures.sumAmountByYear(year);
+        BigDecimal unpaidDonations = donations.sumAmountByYearAndStatus(year, DonationStatus.UNPAID);
+        BigDecimal unpaidExpenditure = expenditures.sumLeftAmountByYear(year);
+
+        if (unpaidDonations.compareTo(BigDecimal.ZERO) > 0 || unpaidExpenditure.compareTo(BigDecimal.ZERO) > 0) {
+            throw new BusinessException(
+                "Cannot close " + year + " while payments are pending. " +
+                "Unpaid donations: ₹" + unpaidDonations + ", expenditure left to pay: ₹" + unpaidExpenditure + "."
+            );
+        }
+
+        BigDecimal donationPaid = donations.sumAmountByYearAndStatus(year, DonationStatus.PAID);
+        BigDecimal expenditurePaid = expenditures.sumPaidAmountByYear(year);
 
         BigDecimal balance = current.getOpeningBalance()
-            .add(donationTotal)
-            .subtract(expenditureTotal);
+            .add(donationPaid)
+            .subtract(expenditurePaid);
 
         if (balance.compareTo(BigDecimal.ZERO) < 0) {
             throw new BusinessException(

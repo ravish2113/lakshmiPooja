@@ -26,8 +26,8 @@ services:
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-pooja}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-pooja_password}
       JWT_SECRET: ${JWT_SECRET:-local-test-only-change-this-to-a-random-secret-at-least-32-chars}
-      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-LocalTestOnly123!}
+      ADMIN_USERNAME: ravi
+      ADMIN_PASSWORD: password
       ADMIN_DISPLAY_NAME: ${ADMIN_DISPLAY_NAME:-Administrator}
       CORS_ALLOWED_ORIGINS: http://localhost,http://localhost:5173
     ports:

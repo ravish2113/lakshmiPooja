@@ -17,10 +17,7 @@ public class ExpenditureService {
     private final ExpenditureRepository expenditures;
     private final YearService yearService;
 
-    public ExpenditureService(
-        ExpenditureRepository expenditures,
-        YearService yearService
-    ) {
+    public ExpenditureService(ExpenditureRepository expenditures, YearService yearService) {
         this.expenditures = expenditures;
         this.yearService = yearService;
     }
@@ -36,11 +33,9 @@ public class ExpenditureService {
     public ExpenditureResponse create(Integer year, ExpenditureRequest request) {
         PoojaYearLedger ledger = yearService.getByYear(year);
         ensureOpen(ledger);
-
         Expenditure e = new Expenditure();
         apply(e, request);
         e.setYear(ledger);
-
         return toResponse(expenditures.save(e));
     }
 
@@ -63,9 +58,13 @@ public class ExpenditureService {
     }
 
     private void apply(Expenditure e, ExpenditureRequest r) {
-        e.setTitle(r.title());
-        e.setCategory(r.category());
-        e.setAmount(r.amount());
+        if (r.paidAmount().compareTo(r.totalCost()) > 0) {
+            throw new BusinessException("Paid amount cannot be greater than total cost.");
+        }
+        e.setTitle(r.title().trim());
+        e.setCategory(r.category().trim());
+        e.setTotalCost(r.totalCost());
+        e.setPaidAmount(r.paidAmount());
         e.setExpenseDate(r.expenseDate());
         e.setVendor(r.vendor());
         e.setReceiptReference(r.receiptReference());
@@ -81,8 +80,8 @@ public class ExpenditureService {
     private ExpenditureResponse toResponse(Expenditure e) {
         return new ExpenditureResponse(
             e.getId(), e.getYear().getYear(), e.getTitle(), e.getCategory(),
-            e.getAmount(), e.getExpenseDate(), e.getVendor(),
-            e.getReceiptReference(), e.getNotes()
+            e.getTotalCost(), e.getPaidAmount(), e.getLeftAmount(), e.getExpenseDate(),
+            e.getVendor(), e.getReceiptReference(), e.getNotes()
         );
     }
 }

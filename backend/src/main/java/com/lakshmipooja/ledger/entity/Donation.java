@@ -19,8 +19,8 @@ public class Donation {
     @Column(name = "donor_name", nullable = false, length = 150)
     private String donorName;
 
-    @Column(name = "flat_details", length = 100)
-    private String flatDetails;
+    @Column(name = "father_mother_name", length = 150)
+    private String fatherMotherName;
 
     @Column(nullable = false, precision = 14, scale = 2)
     private BigDecimal amount;
@@ -31,6 +31,10 @@ public class Donation {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_mode", nullable = false, length = 20)
     private PaymentMode paymentMode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status", nullable = false, length = 20)
+    private DonationStatus paymentStatus = DonationStatus.PAID;
 
     @Column(columnDefinition = "TEXT")
     private String notes;
@@ -44,18 +48,20 @@ public class Donation {
     public Long getId() { return id; }
     public PoojaYearLedger getYear() { return year; }
     public String getDonorName() { return donorName; }
-    public String getFlatDetails() { return flatDetails; }
+    public String getFatherMotherName() { return fatherMotherName; }
     public BigDecimal getAmount() { return amount; }
     public LocalDate getDonationDate() { return donationDate; }
     public PaymentMode getPaymentMode() { return paymentMode; }
+    public DonationStatus getPaymentStatus() { return paymentStatus; }
     public String getNotes() { return notes; }
 
     public void setYear(PoojaYearLedger year) { this.year = year; }
     public void setDonorName(String donorName) { this.donorName = donorName; }
-    public void setFlatDetails(String flatDetails) { this.flatDetails = flatDetails; }
+    public void setFatherMotherName(String fatherMotherName) { this.fatherMotherName = fatherMotherName; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }
     public void setDonationDate(LocalDate donationDate) { this.donationDate = donationDate; }
     public void setPaymentMode(PaymentMode paymentMode) { this.paymentMode = paymentMode; }
+    public void setPaymentStatus(DonationStatus paymentStatus) { this.paymentStatus = paymentStatus; }
     public void setNotes(String notes) { this.notes = notes; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }

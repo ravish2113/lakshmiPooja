@@ -39,7 +39,7 @@ public class PublicController {
     public List<PublicDonationResponse> donations(@PathVariable Integer year) {
         return donations.findByYear(year).stream()
             .map(d -> new PublicDonationResponse(
-                d.id(), d.year(), d.donorName(), d.amount(), d.donationDate(), d.paymentMode()
+                d.id(), d.year(), d.donorName(), d.amount(), d.donationDate(), d.paymentMode(), d.paymentStatus()
             ))
             .toList();
     }

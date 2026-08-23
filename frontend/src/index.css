@@ -76,3 +76,15 @@
   .brand h2{font-size:15px}
   .sidebar-item span{font-size:8px}
 }
+
+/* Payment tracking + reports */
+.payment-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0 22px}
+.payment-summary-card{background:#fff;border:1px solid #e8e8ee;border-radius:14px;padding:20px;box-shadow:0 8px 24px rgba(27,31,67,.06)}
+.payment-summary-title{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;margin-bottom:14px;color:#272b4d}
+.payment-lines{display:grid;gap:10px}.payment-lines>div{display:flex;justify-content:space-between;gap:14px;align-items:center;padding-top:9px;border-top:1px solid #eee}.payment-lines>div:first-child{border-top:0;padding-top:0}.payment-lines span{color:#666;font-size:13px}.payment-lines b{white-space:nowrap}
+.paid-text{color:#148653!important}.pending-text{color:#b94b32!important}
+.status-badge{display:inline-flex;align-items:center;justify-content:center;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.02em}.status-badge.paid{background:#e6f7ef;color:#11714a}.status-badge.unpaid{background:#fff0ec;color:#a43b28}
+.field-label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#555}.field-label input,.field-label select{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px;background:#fff;font-size:14px}.full-field{grid-column:1/-1}.calculated-field{border:1px solid #e1e4ea;border-radius:9px;background:#f8f9fb;padding:10px 12px;display:flex;flex-direction:column;justify-content:center}.calculated-field span{font-size:11px;color:#69707d;text-transform:uppercase;font-weight:700}.calculated-field strong{font-size:18px;color:#b94b32;margin-top:4px}
+.reports-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.report-card{background:#fff;border:1px solid #e5e7ee;border-radius:16px;padding:24px;box-shadow:0 8px 24px rgba(27,31,67,.06)}.report-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:#f3ecff;color:#6a3fc0;margin-bottom:14px}.report-card h2{margin:0 0 8px}.report-card p{color:#687083;line-height:1.55;min-height:52px}.report-card button{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px}.closure-summary{display:flex;flex-direction:column;gap:6px}.closure-summary span{font-size:13px;color:#666}
+@media(max-width:900px){.payment-summary-grid,.reports-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.payment-summary-card,.report-card{padding:16px}.payment-lines>div{align-items:flex-start}.payment-lines span{max-width:58%}.payment-lines b{font-size:13px}.field-label,.calculated-field,.full-field{grid-column:1/-1}.reports-grid{gap:12px}.report-card p{min-height:0}.status-badge{font-size:10px;padding:4px 7px}}
