@@ -1,0 +1,25 @@
+# Feature parity checklist
+
+- [x] Public year list
+- [x] Public dashboard
+- [x] Public donation list (private Father / Mother Name and notes omitted)
+- [x] Public expenditure list
+- [x] Admin/user login with BCrypt-compatible existing passwords
+- [x] JWT session validation
+- [x] Role authorization (ADMIN / USER)
+- [x] Donation create/edit/delete
+- [x] Father / Mother Name
+- [x] Donation PAID / UNPAID
+- [x] UPI / CASH / PENDING modes
+- [x] Expenditure create/edit/delete
+- [x] Total Cost / Paid Amount / Left Amount
+- [x] Dashboard total/paid/unpaid summaries
+- [x] Available cash = opening + paid donations - paid expenditure
+- [x] Year closure blocked while payments are pending
+- [x] Next-year carry-forward safety check
+- [x] User creation/listing for administrators
+- [x] Admin-only Donation PDF
+- [x] Admin-only Expenditure PDF
+- [x] Existing Supabase schema/data compatibility
+- [x] Admin password synchronized from deployment environment
+- [x] Mustafapur branding, community photo and responsive UI retained
